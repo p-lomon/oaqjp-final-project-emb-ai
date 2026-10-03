@@ -1,7 +1,5 @@
 """
-Executing this function initiates the application of emotion
-detection to be executed over the Flask channel and deployed on
-localhost:5000.
+This server is for the emotion detector endpoint
 """
 
 from flask import Flask, request, render_template
@@ -16,6 +14,9 @@ def emo_detect():
     """
     text_to_analyze = request.args.get('textToAnalyze')
     emo_dict = emotion_detector(text_to_analyze)
+
+    if emo_dict['dominant_emotion'] is None:
+        return "Invalid text!Please try again!"
 
     return f"""For the given statement,
     the system response is 'anger': {emo_dict['anger']},
